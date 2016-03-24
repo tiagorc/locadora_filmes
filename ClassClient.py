@@ -2,7 +2,7 @@
 #import java.util.Enumeration;
 #import java.util.Vector;
 from ClassMovie import ClassMovie
-from Alocacao import Alocacao
+from ClassRent import ClassRent
 import itertools
 
 typeMovieRegular = 0
@@ -31,14 +31,14 @@ class ClassClient():
         #Determinar valores para cada linha
         if alocacao.getMovie().getCodePrice() == typeMovieRegular:
             resultado = resultado + 2
-            if alocacao.getDiasAlocados()>2:
-                resultado = resultado + (alocacao.getDiasAlocados()-2)*1.5
+            if alocacao.getRentedDays()>2:
+                resultado = resultado + (alocacao.getRentedDays()-2)*1.5
         elif alocacao.getMovie().getCodePrice() == typeMovieNewRelease:
             resultado = resultado + 3
         elif alocacao.getMovie().getCodePrice() == typeMovieKids:
             resultado = resultado + 1.5
-            if alocacao.getDiasAlocados()>3:
-                resultado = resultado + (alocacao.getDiasAlocados()-3)*1.5
+            if alocacao.getRentedDays()>3:
+                resultado = resultado + (alocacao.getRentedDays()-3)*1.5
 
         return resultado
 
@@ -58,7 +58,7 @@ class ClassClient():
             #adicionar pontos de locador frequente
             pontosFrequenciaAlocacao = self.calculaPontosAlocacao(pontosFrequenciaAlocacao)
             #adicionar bonus para uma locação de dois dias para lançamentos
-            if cada.getMovie().getCodePrice() == ClassMovie.typeMovieNewRelease and cada.getDiasAlocados()>1:
+            if cada.getMovie().getCodePrice() == ClassMovie.typeMovieNewRelease and cada.getRentedDays()>1:
                 pontosFrequenciaAlocacao = pontosFrequenciaAlocacao +1
             #mostrar informacoes para esta locacao
             resultado = resultado + ' '+cada.getMovie().getTitle()+' '+ str(estaQuantidade)+'\n'
@@ -75,9 +75,9 @@ if __name__ == '__main__':
     meuCliente = ClassClient('Ruben')#init: nome
     print meuCliente.getNome()
     fil01 = ClassMovie('Titanic',2) #init: (titulo, preco)
-    alo01 = Alocacao(fil01,5) #filme, dias locados #init: (Filme, diasAlocado)
-    alo02 = Alocacao(fil01,2) #filme, dias locados
-    alo03 = Alocacao(fil01,1) #filme, dias locados
+    alo01 = ClassRent(fil01,5) #filme, dias locados #init: (Filme, diasAlocado)
+    alo02 = ClassRent(fil01,2) #filme, dias locados
+    alo03 = ClassRent(fil01,1) #filme, dias locados
 
     meuCliente.addicionarAlocacao(alo01)
     meuCliente.addicionarAlocacao(alo02)
