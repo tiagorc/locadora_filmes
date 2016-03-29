@@ -10,58 +10,60 @@ typeMovieNewRelease = 1
 typeMovieKids = 2
 
 class ClassClient():
-    _nome = None
-    _alocacoes = []
+    _name = None
+    _arrayOfRents = []
 
-    def __init__(self, nome):
-        self._nome = nome
-        self._alocacoes = []
-    def addicionarAlocacao(self, arg): # arg de tipo alocacao
-        self._alocacoes.append(arg)
-    def getNome(self):
-        return self._nome
+    def __init__(self, name):
+        self._name = name
+        self._arrayOfRents = []
 
-    def calculaPontosAlocacao(self, pontos):
-        return pontos + 1
+    def newRent(self, rentType):
+        self._arrayOfRents.append(rentType)
 
-    def Expresao(self):
-        totalQuantidade = 0.0
-        pontosFrequenciaAlocacao = 0
-        alocacoes = iter(self._alocacoes)
-        resultado = 'Registro de Locação para : '+ self.getNome()+'\n'
+    def getName(self):
+        return self._name
 
-        for cada in alocacoes:
-            estaQuantidade = 0.0
+    def rentBonus(self, bonus):
+        return bonus + 1
 
-            # estaQuantidade += cada.getCharge()
-            estaQuantidade += cada.getCharge()
+    def rentedReport(self):
+        totalPrice = 0.0
+        bonusRent = 0
+        rents = iter(self._arrayOfRents)
+        resultReport = 'Registro de Locação para : '+ self.getName()+'\n'
+
+        for rent in rents:
+            currentPrice = 0.0
+
+            # currentPrice += rent.getCharge()
+            currentPrice += rent.getCharge()
 
             #adicionar pontos de locador frequente
-            pontosFrequenciaAlocacao = self.calculaPontosAlocacao(pontosFrequenciaAlocacao)
+            bonusRent = self.rentBonus(bonusRent)
             #adicionar bonus para uma locação de dois dias para lançamentos
-            if cada.getMovie().getCodePrice() == ClassMovie.typeMovieNewRelease and cada.getRentedDays()>1:
-                pontosFrequenciaAlocacao = pontosFrequenciaAlocacao +1
+            if rent.getMovie().getCodePrice() == ClassMovie.typeMovieNewRelease and rent.getRentedDays()>1:
+                bonusRent = bonusRent +1
             #mostrar informacoes para esta locacao
-            resultado = resultado + ' '+cada.getMovie().getTitle()+' '+ str(estaQuantidade)+'\n'
+            resultReport = resultReport + ' '+rent.getMovie().getTitle()+' '+ str(currentPrice)+'\n'
 
             #calcular totalQuantidade
-            totalQuantidade = totalQuantidade + cada.getMovie().getCodePrice()
+            totalPrice = totalPrice + rent.getMovie().getCodePrice()
 
         #adicionar rodape do relatorio
-        resultado = resultado + "Quantia devida é "+ str(totalQuantidade)+"\n"
-        resultado = resultado + 'Voce ganhou '+ str(pontosFrequenciaAlocacao)+' pontos de locacao.'
-        return resultado
+        resultReport = resultReport + "Quantia devida é "+ str(totalPrice)+"\n"
+        resultReport = resultReport + 'Voce ganhou '+ str(bonusRent)+' pontos de locacao.'
+        return resultReport
 
 if __name__ == '__main__':
-    meuCliente = ClassClient('Ruben')#init: nome
-    print meuCliente.getNome()
-    fil01 = ClassMovie('Titanic',2) #init: (titulo, preco)
-    alo01 = ClassRent(fil01,5) #filme, dias locados #init: (Filme, diasAlocado)
-    alo02 = ClassRent(fil01,2) #filme, dias locados
-    alo03 = ClassRent(fil01,1) #filme, dias locados
+    myClient = ClassClient('Ruben')#init: nome
+    print myClient.getName()
+    newMovie = ClassMovie('Titanic',2) #init: (titulo, preco)
+    firstRent = ClassRent(newMovie,5) #filme, dias locados #init: (Filme, diasAlocado)
+    secondRent = ClassRent(newMovie,2) #filme, dias locados
+    thirdRent = ClassRent(newMovie,1) #filme, dias locados
 
-    meuCliente.addicionarAlocacao(alo01)
-    meuCliente.addicionarAlocacao(alo02)
-    meuCliente.addicionarAlocacao(alo03)
+    myClient.newRent(firstRent)
+    myClient.newRent(secondRent)
+    myClient.newRent(thirdRent)
 
-    print meuCliente.Expresao()
+    print myClient.rentedReport()
