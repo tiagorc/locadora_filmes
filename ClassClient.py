@@ -24,36 +24,17 @@ class ClassClient():
     def calculaPontosAlocacao(self, pontos):
         return pontos + 1
 
-
-    #mandar esse metodo para a classe Alocacao e chama-lo de getCharge()
-    def quantidadePara(self, alocacao):
-        resultado = 0.0
-        #Determinar valores para cada linha
-        if alocacao.getMovie().getCodePrice() == typeMovieRegular:
-            resultado = resultado + 2
-            if alocacao.getRentedDays()>2:
-                resultado = resultado + (alocacao.getRentedDays()-2)*1.5
-        elif alocacao.getMovie().getCodePrice() == typeMovieNewRelease:
-            resultado = resultado + 3
-        elif alocacao.getMovie().getCodePrice() == typeMovieKids:
-            resultado = resultado + 1.5
-            if alocacao.getRentedDays()>3:
-                resultado = resultado + (alocacao.getRentedDays()-3)*1.5
-
-        return resultado
-
     def Expresao(self):
         totalQuantidade = 0.0
         pontosFrequenciaAlocacao = 0
         alocacoes = iter(self._alocacoes)
         resultado = 'Registro de Locação para : '+ self.getNome()+'\n'
 
-        #while(alocacoes):
         for cada in alocacoes:
             estaQuantidade = 0.0
-            #cada = next(alocacoes) #cada tipo alocacao
-            #cada dever ser de tipo alocacao
-            estaQuantidade = self.quantidadePara(cada)
+
+            # estaQuantidade += cada.getCharge()
+            estaQuantidade += cada.getCharge()
 
             #adicionar pontos de locador frequente
             pontosFrequenciaAlocacao = self.calculaPontosAlocacao(pontosFrequenciaAlocacao)
@@ -84,10 +65,3 @@ if __name__ == '__main__':
     meuCliente.addicionarAlocacao(alo03)
 
     print meuCliente.Expresao()
-
-
-
-# problemas
-#
-# resultado quantidadetotal errada
-# 
